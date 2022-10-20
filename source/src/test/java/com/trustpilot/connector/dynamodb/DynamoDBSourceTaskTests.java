@@ -143,7 +143,7 @@ public class DynamoDBSourceTaskTests {
         streamRecord.setNewImage(row);
 
         com.amazonaws.services.dynamodbv2.model.Record dynamodbRecord =
-                new Record();
+                new com.amazonaws.services.dynamodbv2.model.Record();
         dynamodbRecord.setDynamodb(streamRecord);
         dynamodbRecord.setEventName(operation);
         return new RecordAdapter(dynamodbRecord);

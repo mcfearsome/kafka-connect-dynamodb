@@ -1,7 +1,7 @@
 package com.trustpilot.connector.dynamodb;
 
 import org.apache.kafka.connect.storage.OffsetStorageReader;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.Collection;
 import java.util.Map;
