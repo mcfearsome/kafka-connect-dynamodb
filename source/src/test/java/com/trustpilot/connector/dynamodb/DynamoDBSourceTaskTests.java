@@ -33,7 +33,7 @@ public class DynamoDBSourceTaskTests {
     private HashMap<String, String> configs;
 
     @BeforeEach
-    private void beforeEach() {
+    void beforeEach() {
         configs = new HashMap<>();
         configs.put("table", tableName);
         configs.put("task.id", "testTask1");
@@ -709,14 +709,19 @@ public class DynamoDBSourceTaskTests {
         Map<String, AttributeValue> row = new HashMap<>();
         row.put("col1", new AttributeValue("key1"));
 
-        dynamoDBRecords.getRecords().add(getRecordAdapter(Collections.singletonMap("col1", new AttributeValue().withN("key1")),
-                row, Instant.parse("2001-01-01T01:00:00.00Z"),
-                "10000000000000000000001",
-                "INSERT"));
-        dynamoDBRecords.getRecords().add(getRecordAdapter(Collections.singletonMap("col1", new AttributeValue().withN("key1")),
-                row, Instant.parse("2001-01-01T01:00:00.00Z"),
-                "10000000000000000000002"
-                , "INVALID"));
+        try {
+            dynamoDBRecords.getRecords().add(getRecordAdapter(Collections.singletonMap("col1", new AttributeValue().withN("key1")),
+                    row, Instant.parse("2001-01-01T01:00:00.00Z"),
+                    "10000000000000000000001",
+                    "INSERT"));
+            dynamoDBRecords.getRecords().add(getRecordAdapter(Collections.singletonMap("col1", new AttributeValue().withN("key1")),
+                    row, Instant.parse("2001-01-01T01:00:00.00Z"),
+                    "10000000000000000000002"
+                    , "INVALID"));
+        } catch (Exception e) {
+//            noop
+        }
+
 
         DynamoDBSourceTask task = new SourceTaskBuilder()
                 .withOffset(offset)
